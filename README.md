@@ -3,16 +3,15 @@ dind-jenkins-slave
 
 Docker-in-Docker Jenkins Slave
 
-[![Docker Container](http://dockeri.co/image/spiddy/dind-jenkins-slave)](https://registry.hub.docker.com/u/spiddy/dind-jenkins-slave/)
+[![Docker Container](http://dockeri.co/image/seges/dind-jenkins-slave)](https://registry.hub.docker.com/u/seges/dind-jenkins-slave/)
 
 Contains:
 
 * Docker
 * Java
-* Fig 1.0.1 - this is kept for backward compatibility for some time
-* Compose 1.3.0
+* Compose 1.5.2
 
-Can be used as Jenkins slave that can launch containers with docker or fig.
+Can be used as Jenkins slave that can launch containers with docker.
 
 Requirements
 ------------
@@ -28,7 +27,7 @@ Run Docker-in-Docker Jenkins Slave
 To run the Docker-in-Docker Jenkins Slave:
 
 ```
-docker run --privileged --link=jenkins:master -v /var/run/docker.sock:/var/run/docker.sock -d spiddy/dind-jenkins-slave
+docker run --privileged --link=jenkins:master -v /var/run/docker.sock:/var/run/docker.sock -d seges/dind-jenkins-slave:1.2.0
 ```
 
 It will:
@@ -65,5 +64,6 @@ In case more parameters are needed to be passed to swarm plugin CLI use **EXTRA_
 Example:
 
 ```
-docker run --privileged --link=jenkins:master -v /var/run/docker.sock:/var/run/docker.sock -e EXTRA_PARAMS="-description 'Jenkins Slave' -executors 2" -d spiddy/dind-jenkins-slave
+docker run --privileged --link=jenkins:master -v /var/run/docker.sock:/var/run/docker.sock -e EXTRA_PARAMS="-description 'Jenkins Slave' -executors 2" -d seges/dind-jenkins-slave:1.2.0
 ```
+

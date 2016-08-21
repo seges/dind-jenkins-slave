@@ -19,7 +19,7 @@ ADD /jenkins-slave /opt/
 WORKDIR /opt/jenkins-slave
 
 RUN wget http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.0/swarm-client-2.0-jar-with-dependencies.jar -O /opt/jenkins-slave/swarm-client-2.0-jar-with-dependencies.jar
-CMD ash /opt/jenkins-slave/jenkins-slave-init.sh
+CMD ash /opt/jenkins-slave-init.sh
 #CMD java -jar swarm-client-2.0-jar-with-dependencies.jar -master http://$MASTER_PORT_8080_TCP_ADDR:$MASTER_PORT_8080_TCP_PORT $EXTRA_PARAMS
 
 # Load scripts
