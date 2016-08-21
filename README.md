@@ -7,9 +7,10 @@ Docker-in-Docker Jenkins Slave
 
 Contains:
 
-* Docker
+* Alpine Linux
+* Docker 1.11.1
 * Java
-* Compose 1.5.2
+* Compose 1.8.0
 
 Can be used as Jenkins slave that can launch containers with docker.
 
@@ -27,12 +28,11 @@ Run Docker-in-Docker Jenkins Slave
 To run the Docker-in-Docker Jenkins Slave:
 
 ```
-docker run --privileged --link=jenkins:master -v /var/run/docker.sock:/var/run/docker.sock -d seges/dind-jenkins-slave:1.2.0
+docker run --link=jenkins:master -v /var/run/docker.sock:/var/run/docker.sock -d seges/dind-jenkins-slave:1.2.0
 ```
 
 It will:
 
-* launch the container in `privileged` mode
 * Connect the docker socket inside the container to reuse the running docker service
 * Link jenkins master container
 * Run in the background
@@ -64,6 +64,6 @@ In case more parameters are needed to be passed to swarm plugin CLI use **EXTRA_
 Example:
 
 ```
-docker run --privileged --link=jenkins:master -v /var/run/docker.sock:/var/run/docker.sock -e EXTRA_PARAMS="-description 'Jenkins Slave' -executors 2" -d seges/dind-jenkins-slave:1.2.0
+docker run --link=jenkins:master -v /var/run/docker.sock:/var/run/docker.sock -e EXTRA_PARAMS="-description 'Jenkins Slave' -executors 2" -d seges/dind-jenkins-slave:1.2.0
 ```
 
