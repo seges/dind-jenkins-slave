@@ -1,18 +1,33 @@
-FROM jpetazzo/dind
-MAINTAINER spiddy
+FROM anapsix/alpine-java:8u102b14_server-jre_unlimited
+MAINTAINER Ladislav Gazo <gazo@seges.sk>
 
-ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update -qq && \
-  apt-get install -qqy software-properties-common && \
-  echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
-  echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections && \
-  add-apt-repository -y ppa:webupd8team/java && \
-  apt-get update && \
-  apt-get install -qqy oracle-java7-installer && \
-  apt-get clean
+USER root
 
-RUN apt-get install -y make
-RUN wget -q https://github.com/docker/fig/releases/download/1.0.1/fig-Linux-x86_64 -O /usr/local/bin/fig && chmod +x /usr/local/bin/fig
-RUN wget -q https://github.com/docker/compose/releases/download/1.5.2/docker-compose-`uname -s`-`uname -m` -O /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
-RUN wget -q http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.0/swarm-client-2.0-jar-with-dependencies.jar
+#RUN locale-gen en_US.UTF-8
+#RUN dpkg-reconfigure locales
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+RUN echo "http://dl-6.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+RUN apk update && \
+    apk add docker py-pip wget curl git
+
+RUN pip install docker-compose
+
+ADD /jenkins-slave /opt/
+WORKDIR /opt/jenkins-slave
+
+RUN wget http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.0/swarm-client-2.0-jar-with-dependencies.jar -O /opt/jenkins-slave/swarm-client-2.0-jar-with-dependencies.jar
 CMD java -jar swarm-client-2.0-jar-with-dependencies.jar -master http://$MASTER_PORT_8080_TCP_ADDR:$MASTER_PORT_8080_TCP_PORT $EXTRA_PARAMS
+
+# Load scripts
+#COPY bootstrap/ /bootstrap/
+#RUN chmod +x -Rv /bootstrap
+
+# Add user jenkins to the image
+#RUN adduser -D -h /home/jenkins -s /bin/ash jenkins
+#RUN adduser jenkins docker
+
+#CMD /opt/jenkins-slave/jenkins-slave-init.sh
+
