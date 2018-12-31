@@ -28,7 +28,7 @@ Run Docker-in-Docker Jenkins Slave
 To run the Docker-in-Docker Jenkins Slave:
 
 ```
-docker run --link=jenkins:master -v /var/run/docker.sock:/var/run/docker.sock -d seges/dind-jenkins-slave:1.2.0
+docker run --link=jenkins:master -v /var/run/docker.sock:/var/run/docker.sock -d seges/dind-jenkins-slave:1.3.0
 ```
 
 It will:
@@ -64,6 +64,14 @@ In case more parameters are needed to be passed to swarm plugin CLI use **EXTRA_
 Example:
 
 ```
-docker run --link=jenkins:master -v /var/run/docker.sock:/var/run/docker.sock -e EXTRA_PARAMS="-description 'Jenkins Slave' -executors 2" -d seges/dind-jenkins-slave:1.2.0
+docker run --link=jenkins:master -v /var/run/docker.sock:/var/run/docker.sock -e EXTRA_PARAMS="-description 'Jenkins Slave' -executors 2" -d seges/dind-jenkins-slave:1.3.0
 ```
 
+Build
+---------------------
+
+```
+docker-compose build
+```
+
+Current version number is maintained in `docker-compose.yml`.
