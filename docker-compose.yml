@@ -1,0 +1,6 @@
+version: '2'
+
+services:
+  dind-jenkins-slave:
+    build: .
+    image: seges/dind-jenkins-slave:1.3.0
