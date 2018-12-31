@@ -7,10 +7,10 @@ Docker-in-Docker Jenkins Slave
 
 Contains:
 
-* Alpine Linux
-* Docker 1.11.1
-* Java
-* Compose 1.8.0
+* Alpine Linux 3.4
+* Docker 1.11.2-r1
+* Java 8u102b14
+* Compose 1.23.2
 
 Can be used as Jenkins slave that can launch containers with docker.
 

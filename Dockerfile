@@ -9,18 +9,18 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-RUN echo "http://dl-6.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
 RUN apk update && \
-    apk add docker py-pip wget curl git
+    apk add docker=1.11.2-r1 py-pip wget curl git
 
-RUN pip install docker-compose
+# https://pypi.org/project/docker-compose/
+RUN pip install docker-compose==1.23.2
 
 ADD /jenkins-slave /opt/
 WORKDIR /opt/jenkins-slave
 
-RUN wget http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.0/swarm-client-2.0-jar-with-dependencies.jar -O /opt/jenkins-slave/swarm-client-2.0-jar-with-dependencies.jar
+RUN wget http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.9/swarm-client-3.9.jar -O /opt/jenkins-slave/swarm-client-3.9.jar
 CMD ash /opt/jenkins-slave-init.sh
-#CMD java -jar swarm-client-2.0-jar-with-dependencies.jar -master http://$MASTER_PORT_8080_TCP_ADDR:$MASTER_PORT_8080_TCP_PORT $EXTRA_PARAMS
+#CMD java -jar swarm-client-3.9.jar -master http://$MASTER_PORT_8080_TCP_ADDR:$MASTER_PORT_8080_TCP_PORT $EXTRA_PARAMS
 
 # Load scripts
 #COPY bootstrap/ /bootstrap/
